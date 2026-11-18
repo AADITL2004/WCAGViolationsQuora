@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="WCAG 2.2 findings, observed barriers, code examples and accessible design recommendations for Quora's question-creation flow.">
+  <title>WCAG Findings — Quora, Reconsidered</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header"><div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Quora, Reconsidered home"><span class="brand-mark" aria-hidden="true">Q</span><span>Quora, <span class="brand-light">Reconsidered</span></span></a>
+    <nav class="primary-nav" aria-label="Main navigation"><a href="index.html">The website</a><a href="guidelines.html" aria-current="page">WCAG findings</a><a href="about.html">About this audit</a></nav>
+  </div></header>
+  <div class="reading-tools" role="region" aria-label="Reading preferences"><span class="tools-label">Reading preferences</span><div class="tool-controls">
+    <button type="button" id="font-smaller" class="tool-button" aria-label="Decrease paragraph text size">A−</button><button type="button" id="font-larger" class="tool-button" aria-label="Increase paragraph text size">A+</button><button type="button" id="spacing-toggle" class="tool-button" aria-pressed="false">More line spacing</button><button type="button" id="bionic-toggle" class="tool-button" aria-pressed="false">Bionic reading: off</button><button type="button" id="reset-reading" class="tool-button tool-button-muted">Reset</button><span id="reading-status" class="sr-only" aria-live="polite"></span>
+  </div></div>
+  <main id="main" tabindex="-1">
+    <section class="page-shell page-hero compact-hero">
+      <p class="eyebrow">02 — The evaluation</p><h1>From friction to findings.</h1>
+      <p class="hero-intro">A first-pass WCAG 2.2 review of the Quora question-creation journey. Observations are separated from issues that still require HTML or assistive-technology verification.</p>
+      <div class="legend-row"><span class="status status-observed">Observed in testing</span><span class="status status-verify">Needs verification</span><span class="status status-design">Design recommendation</span></div>
+    </section>
+
+    <section class="page-shell section-block" aria-labelledby="approach-title">
+      <div class="section-heading"><p class="eyebrow">How to read this page</p><h2 id="approach-title">Evidence before conclusions</h2></div>
+      <p class="lead">A screenshot can show a visual problem, but it cannot prove what a screen reader announces or what role an element exposes. Keyboard and VoiceOver observations are reported as user-test findings. HTML-related issues remain verification targets until the relevant DOM and accessibility tree have been inspected.</p>
+      <div class="callout"><strong>Scope note</strong><p>This is a preliminary manual evaluation, not a formal conformance certification. A criterion is only described as a confirmed violation when the available evidence supports that conclusion.</p></div>
+    </section>
+
+    <section class="page-shell section-block" aria-labelledby="findings-title">
+      <div class="section-heading"><p class="eyebrow">01 — WCAG findings</p><h2 id="findings-title">Potential barriers across the flow</h2><p class="section-summary">The criteria below are the most relevant to the observed journey. “Needs verification” means the issue is plausible but not yet proven from the available screenshots.</p></div>
+      <div class="finding-list">
+        <article class="finding-card">
+          <div class="finding-top"><span class="finding-number">01</span><span class="status status-observed">Observed in testing</span></div>
+          <h3>Keyboard navigation is difficult to follow</h3>
+          <p class="criterion">WCAG 2.1.1 — Keyboard (Level A) · 2.4.3 — Focus Order (Level A)</p>
+          <p>The user reported that the flow was not easy to use with only a keyboard. They tested reaching the Add Question control, opening the modal and interacting with the duplicate-question warning. The exact focus sequence and whether every control is operable still need a repeatable test.</p>
+          <div class="finding-detail"><strong>Usability impact</strong><p>Keyboard users may have difficulty reaching controls, understanding where focus has moved or completing the question flow without a pointer.</p><strong>Design recommendation</strong><p>Make every action keyboard-operable, provide a clear visible focus indicator, preserve a logical focus order and manage focus when dialogs open and close.</p></div>
+        </article>
+        <article class="finding-card">
+          <div class="finding-top"><span class="finding-number">02</span><span class="status status-observed">Observed in testing</span></div>
+          <h3>Screen-reader output is difficult to map to the interface</h3>
+          <p class="criterion">WCAG 1.3.1 — Info and Relationships (Level A) · 1.3.2 — Meaningful Sequence (Level A) · 4.1.2 — Name, Role, Value (Level A)</p>
+          <p>During VoiceOver use, the tester found it difficult to identify some announced elements visually and reported that content could be read in an illogical order. Because the tester was also unfamiliar with VoiceOver, this observation should be retested after learning the basic navigation commands.</p>
+          <div class="finding-detail"><strong>Usability impact</strong><p>Users may lose their place or be unable to connect an announcement with the control or content it describes.</p><strong>Design recommendation</strong><p>Use semantic landmarks, headings, lists and controls; give interactive elements descriptive names; and ensure the DOM order follows the meaningful reading sequence.</p></div>
+        </article>
+        <article class="finding-card">
+          <div class="finding-top"><span class="finding-number">03</span><span class="status status-observed">Observed in testing</span></div>
+          <h3>Dialog changes are not sufficiently clear to the screen-reader user</h3>
+          <p class="criterion">WCAG 4.1.2 — Name, Role, Value (Level A) · 2.4.3 — Focus Order (Level A)</p>
+          <p>The duplicate-question and question-creation dialogs were difficult to navigate with a keyboard and screen reader. The tester also reported difficulty recognising the modal transition. The dialog role, accessible name, focus placement and focus containment need DOM and keyboard verification.</p>
+          <div class="finding-detail"><strong>Usability impact</strong><p>A user may not realise that a new dialog has opened or may continue navigating content behind it.</p><strong>Design recommendation</strong><p>Use a correctly labelled native dialog or equivalent dialog pattern, move focus into it when opened, keep focus within it while modal, support Escape where appropriate, and return focus to the invoking control when closed.</p></div>
+        </article>
+        <article class="finding-card">
+          <div class="finding-top"><span class="finding-number">04</span><span class="status status-observed">Observed in testing</span></div>
+          <h3>Validation feedback was not clearly announced</h3>
+          <p class="criterion">WCAG 4.1.3 — Status Messages (Level AA) · 3.3.1 — Error Identification (Level A)</p>
+          <p>The tester reported that the validation error was not announced as expected. The screenshot shows an orange message asking the user to add more detail and write a complete sentence. The live-region implementation and association with the question field have not yet been inspected.</p>
+          <div class="finding-detail"><strong>Usability impact</strong><p>A screen-reader user may not know that an error appeared, why the action failed or which field needs attention.</p><strong>Design recommendation</strong><p>Announce dynamically inserted feedback without unexpectedly moving focus. Associate field-specific errors with the input and provide a clear correction instruction.</p></div>
+        </article>
+        <article class="finding-card">
+          <div class="finding-top"><span class="finding-number">05</span><span class="status status-verify">Needs verification</span></div>
+          <h3>The question field may rely on placeholder text</h3>
+          <p class="criterion">WCAG 3.3.2 — Labels or Instructions (Level A) · 4.1.2 — Name, Role, Value (Level A)</p>
+          <p>The visible prompt in the question field reads “Start your question with ‘What’, ‘How’, ‘Why’, etc.” This screenshot does not reveal whether a persistent programmatic label is present in the HTML.</p>
+          <div class="finding-detail"><strong>Usability impact</strong><p>If placeholder text is the only label, users may lose the prompt while typing or have difficulty identifying the field later.</p><strong>Design recommendation</strong><p>Provide a visible, persistent label such as “Your question” and use the placeholder only as an example or hint.</p></div>
+        </article>
+        <article class="finding-card">
+          <div class="finding-top"><span class="finding-number">06</span><span class="status status-verify">Needs verification</span></div>
+          <h3>Icon-only controls may lack accessible names</h3>
+          <p class="criterion">WCAG 4.1.2 — Name, Role, Value (Level A) · 2.4.6 — Headings and Labels (Level AA)</p>
+          <p>The interface contains icon-only controls, including close and navigation icons. The screenshots cannot establish whether each control has a computed accessible name.</p>
+          <div class="finding-detail"><strong>Usability impact</strong><p>A screen reader may announce a generic “button” without explaining its purpose.</p><strong>Design recommendation</strong><p>Give each icon button a concise accessible name, such as “Close Add Question dialog”, and hide purely decorative icon artwork from the accessibility tree.</p></div>
+        </article>
+        <article class="finding-card">
+          <div class="finding-top"><span class="finding-number">07</span><span class="status status-verify">Needs verification</span></div>
+          <h3>Image-based posts may hide information from non-visual users</h3>
+          <p class="criterion">WCAG 1.1.1 — Non-text Content (Level A)</p>
+          <p>The home feed includes a post where much of the message is embedded in an image. The screenshot demonstrates image-based content, but its actual alternative text must be inspected before confirming a failure.</p>
+          <div class="finding-detail"><strong>Usability impact</strong><p>If the image contains meaningful text and has no equivalent text alternative, a screen-reader user may miss the post's central message.</p><strong>Design recommendation</strong><p>Provide concise alt text that communicates the image's purpose, and include important text from image-based posts in the post's accessible text content.</p></div>
+        </article>
+        <article class="finding-card">
+          <div class="finding-top"><span class="finding-number">08</span><span class="status status-verify">Needs verification</span></div>
+          <h3>Dense layout, contrast and target sizes may create additional barriers</h3>
+          <p class="criterion">WCAG 1.4.3 — Contrast (Minimum) (Level AA) · 1.4.11 — Non-text Contrast (Level AA) · 2.5.8 — Target Size (Minimum) (Level AA)</p>
+          <p>The feed combines several navigation areas, image-led posts and advertisements. Small icons and muted text are visible in the screenshots, but contrast ratios and target dimensions have not been measured.</p>
+          <div class="finding-detail"><strong>Usability impact</strong><p>Low contrast can make text and controls harder to perceive. Small targets can be difficult to activate for people with limited dexterity.</p><strong>Design recommendation</strong><p>Measure text and component contrast, enlarge interactive hit areas where needed, and create clearer visual separation between primary content and advertising.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="page-shell section-block" aria-labelledby="screenreader-title">
+      <div class="section-heading"><p class="eyebrow">Screen-reader guidance</p><h2 id="screenreader-title">What a clear experience should communicate</h2><p class="section-summary">These are expected outcomes to test, not a transcript of what Quora currently announces.</p></div>
+      <div class="finding-list">
+        <article class="finding-card"><h3>1. Entering the page</h3><p>A screen-reader user should be able to identify the page title, navigate by headings and landmarks, and skip repeated navigation to reach the main content.</p><p class="criterion">Listen for: page title · main landmark · heading structure · navigation landmark</p></article>
+        <article class="finding-card"><h3>2. Opening Add Question</h3><p>When the dialog opens, focus should move into it and the dialog's purpose should be announced. The close control and tabs should have understandable names, roles and states.</p><p class="criterion">Example announcement: “Add Question, dialog.”</p></article>
+        <article class="finding-card"><h3>3. Entering a question</h3><p>The text-entry control should expose a persistent label. Instructions should be available without relying on placeholder text alone.</p><p class="criterion">Example announcement: “Your question, text area.”</p></article>
+        <article class="finding-card"><h3>4. Receiving duplicate or validation feedback</h3><p>New feedback should be announced without forcing the user to search for it. The similar question and next-step actions should be discoverable, and an error should be associated with the field it describes.</p><p class="criterion">Example announcement: “A similar question was found.”</p></article>
+        <article class="finding-card"><h3>5. Closing or returning to the form</h3><p>When a dialog closes, focus should return to a meaningful place, usually the control that opened it. The user's entered text should remain available when the flow allows correction.</p><p class="criterion">Test with: keyboard only · VoiceOver · Chrome accessibility tree</p></article>
+      </div>
+      <div class="callout"><strong>Testing note for VoiceOver</strong><p>VoiceOver has its own navigation model and keyboard commands. Before attributing every confusing announcement to the website, repeat the test after becoming comfortable with basic VoiceOver navigation. Record the exact phrase heard, the focused element and the action that caused the announcement.</p></div>
+    </section>
+
+    <section class="page-shell section-block" aria-labelledby="code-title">
+      <div class="section-heading"><p class="eyebrow">02 — Code patterns</p><h2 id="code-title">What inaccessible code can look like</h2><p class="section-summary">These are illustrative examples for the assignment. They are not copied from Quora and should not be presented as Quora's actual HTML.</p></div>
+      <div class="code-grid">
+        <article class="code-card"><div class="code-heading"><div><span class="code-label bad">Problematic pattern</span><h3>Input with no persistent label</h3></div><button class="copy-button" type="button" data-copy="bad-input">Copy code</button></div><pre><code id="bad-input">&lt;textarea
+  placeholder="Start your question..."
+&gt;&lt;/textarea&gt;</code></pre><p class="code-explain">A placeholder alone is not a reliable replacement for a persistent label.</p></article>
+        <article class="code-card"><div class="code-heading"><div><span class="code-label good">Improved pattern</span><h3>Explicitly labelled input</h3></div><button class="copy-button" type="button" data-copy="good-input">Copy code</button></div><pre><code id="good-input">&lt;label for="question"&gt;Your question&lt;/label&gt;
+&lt;textarea
+  id="question"
+  name="question"
+  placeholder="Start with What, How, or Why"
+&gt;&lt;/textarea&gt;</code></pre><p class="code-explain">The visible label is programmatically associated with the text area.</p></article>
+
+        <article class="code-card"><div class="code-heading"><div><span class="code-label bad">Problematic pattern</span><h3>Unlabelled icon button</h3></div><button class="copy-button" type="button" data-copy="bad-button">Copy code</button></div><pre><code id="bad-button">&lt;button&gt;
+  &lt;svg&gt;...&lt;/svg&gt;
+&lt;/button&gt;</code></pre><p class="code-explain">The button may have no meaningful accessible name if its icon is the only content.</p></article>
+        <article class="code-card"><div class="code-heading"><div><span class="code-label good">Improved pattern</span><h3>Named icon button</h3></div><button class="copy-button" type="button" data-copy="good-button">Copy code</button></div><pre><code id="good-button">&lt;button type="button"
+  aria-label="Close Add Question dialog"&gt;
+  &lt;svg aria-hidden="true"&gt;...&lt;/svg&gt;
+&lt;/button&gt;</code></pre><p class="code-explain">The accessible name describes the action; the decorative icon is hidden from assistive technology.</p></article>
+
+        <article class="code-card"><div class="code-heading"><div><span class="code-label bad">Problematic pattern</span><h3>Unannounced error container</h3></div><button class="copy-button" type="button" data-copy="bad-error">Copy code</button></div><pre><code id="bad-error">&lt;div class="error"&gt;
+  This question needs more detail.
+&lt;/div&gt;</code></pre><p class="code-explain">If this message is inserted dynamically, it may not be announced automatically.</p></article>
+        <article class="code-card"><div class="code-heading"><div><span class="code-label good">Improved pattern</span><h3>Associated, announced error</h3></div><button class="copy-button" type="button" data-copy="good-error">Copy code</button></div><pre><code id="good-error">&lt;label for="question"&gt;Your question&lt;/label&gt;
+&lt;textarea id="question"
+  aria-invalid="true"
+  aria-describedby="question-error"&gt;
+&lt;/textarea&gt;
+&lt;p id="question-error"&gt;
+  Add more detail to your question.
+&lt;/p&gt;
+&lt;div role="alert"&gt;
+  Your question needs more detail.
+&lt;/div&gt;</code></pre><p class="code-explain">The field is identified as invalid and references its explanation. Use an alert for a newly occurring, important error announcement; avoid duplicate announcements if the same message is already associated and announced.</p></article>
+
+        <article class="code-card"><div class="code-heading"><div><span class="code-label bad">Problematic pattern</span><h3>Dialog without clear semantics</h3></div><button class="copy-button" type="button" data-copy="bad-dialog">Copy code</button></div><pre><code id="bad-dialog">&lt;div class="modal"&gt;
+  &lt;h2&gt;Add Question&lt;/h2&gt;
+  ...
+&lt;/div&gt;</code></pre><p class="code-explain">A generic container does not, by itself, expose dialog semantics or modal behaviour.</p></article>
+        <article class="code-card"><div class="code-heading"><div><span class="code-label good">Improved pattern</span><h3>Named dialog pattern</h3></div><button class="copy-button" type="button" data-copy="good-dialog">Copy code</button></div><pre><code id="good-dialog">&lt;dialog
+  aria-labelledby="dialog-title"&gt;
+  &lt;h2 id="dialog-title"&gt;Add Question&lt;/h2&gt;
+  ...
+&lt;/dialog&gt;</code></pre><p class="code-explain">A native dialog opened modally with showModal() provides dialog semantics and modal behaviour. Focus management and a sensible close path still need to be implemented and tested.</p></article>
+      </div>
+    </section>
+
+    <section class="page-shell section-block" aria-labelledby="priorities-title">
+      <div class="section-heading"><p class="eyebrow">03 — Redesign direction</p><h2 id="priorities-title">Design recommendations</h2></div>
+      <div class="recommendation-grid">
+        <article><span>01</span><h3>Make structure explicit</h3><p>Use landmarks, a logical heading hierarchy, labelled controls and meaningful text alternatives.</p></article>
+        <article><span>02</span><h3>Keep focus predictable</h3><p>Make keyboard focus visible, move it into newly opened dialogs and return it to the trigger when the dialog closes.</p></article>
+        <article><span>03</span><h3>Explain errors in context</h3><p>Announce dynamic feedback, identify the field in error and preserve the user's entered text wherever possible.</p></article>
+        <article><span>04</span><h3>Reduce competing content</h3><p>Give the primary task a clear visual hierarchy and avoid letting ads or secondary actions overwhelm the question flow.</p></article>
+      </div>
+    </section>
+
+    <section class="page-shell references">
+      <h2>WCAG reference links</h2>
+      <ul>
+        <li><a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">W3C — Web Content Accessibility Guidelines (WCAG) 2.2</a></li>
+        <li><a href="https://www.w3.org/WAI/test-evaluate/preliminary/" target="_blank" rel="noopener">W3C — Easy Checks: A First Review of Web Accessibility</a></li>
+        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html" target="_blank" rel="noopener">W3C — Understanding Status Messages (4.1.3)</a></li>
+        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html" target="_blank" rel="noopener">W3C — Understanding Name, Role, Value (4.1.2)</a></li>
+      </ul>
+    </section>
+    <section class="page-shell closing-band"><p class="eyebrow">NEXT — THE DESIGNER</p><h2>Accessibility is part of the design, not a layer added afterwards.</h2><p>Learn about the testing perspective and the accessibility choices built into this report website.</p><a class="button button-light" href="about.html">About this audit <span aria-hidden="true">↗</span></a></section>
+  </main>
+  <footer class="site-footer"><span>Quora, Reconsidered</span><span>Manual accessibility evaluation · 2026</span><a href="#main">Back to top ↑</a></footer>
+</body>
+</html>

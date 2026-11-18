@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="About the evaluator, the manual testing process and the accessibility features built into the Quora, Reconsidered report website.">
+  <title>About This Audit — Quora, Reconsidered</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header"><div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Quora, Reconsidered home"><span class="brand-mark" aria-hidden="true">Q</span><span>Quora, <span class="brand-light">Reconsidered</span></span></a>
+    <nav class="primary-nav" aria-label="Main navigation"><a href="index.html">The website</a><a href="guidelines.html">WCAG findings</a><a href="about.html" aria-current="page">About this audit</a></nav>
+  </div></header>
+  <div class="reading-tools" role="region" aria-label="Reading preferences"><span class="tools-label">Reading preferences</span><div class="tool-controls">
+    <button type="button" id="font-smaller" class="tool-button" aria-label="Decrease paragraph text size">A−</button><button type="button" id="font-larger" class="tool-button" aria-label="Increase paragraph text size">A+</button><button type="button" id="spacing-toggle" class="tool-button" aria-pressed="false">More line spacing</button><button type="button" id="bionic-toggle" class="tool-button" aria-pressed="false">Bionic reading: off</button><button type="button" id="reset-reading" class="tool-button tool-button-muted">Reset</button><span id="reading-status" class="sr-only" aria-live="polite"></span>
+  </div></div>
+  <main id="main" tabindex="-1">
+    <section class="page-shell page-hero compact-hero">
+      <p class="eyebrow">03 — About the evaluator</p><h1>Designing for access is designing for people.</h1>
+      <p class="hero-intro">This page explains the perspective behind the evaluation and the accessibility decisions made in the report website itself.</p>
+    </section>
+    <section class="page-shell section-block" aria-labelledby="perspective-title">
+      <div class="section-heading"><p class="eyebrow">01 — Perspective</p><h2 id="perspective-title">A note from the evaluator</h2></div>
+      <div class="two-column">
+        <div><p class="lead">I am an HCI student interested in inclusive and accessible design. This evaluation gave me an opportunity to look beyond whether a task is visually straightforward and ask whether it is equally understandable and operable through different ways of interacting.</p><p>I used Quora's question-creation flow as a practical case study. The testing also reminded me that using assistive technology requires learning: my unfamiliarity with VoiceOver made parts of the experience difficult to interpret. I have kept that reflection separate from claims about WCAG conformance.</p></div>
+        <aside class="context-card"><span class="card-kicker">A REFLECTION</span><p>Accessibility testing is not about assuming what a person can or cannot do. It is about checking whether the interface provides clear, flexible ways to perceive information and complete a task.</p></aside>
+      </div>
+    </section>
+    <section class="page-shell section-block" aria-labelledby="built-title">
+      <div class="section-heading"><p class="eyebrow">02 — This website</p><h2 id="built-title">How this report promotes accessibility</h2><p class="section-summary">The report website is also a small design exercise. Its structure and controls are intended to make the content easier to navigate and read.</p></div>
+      <div class="accessibility-grid">
+        <article><span class="feature-icon" aria-hidden="true">Aa</span><h3>Readable typography</h3><p>Poppins is used for body copy and Montserrat for headings, with a clear hierarchy, generous line length and responsive sizing.</p></article>
+        <article><span class="feature-icon" aria-hidden="true">↹</span><h3>Keyboard-first structure</h3><p>A skip link, semantic landmarks, native links and buttons, visible focus styles and logical document order support keyboard navigation.</p></article>
+        <article><span class="feature-icon" aria-hidden="true">▧</span><h3>Descriptive image alternatives</h3><p>Evidence screenshots have alt text describing the relevant screen and interface elements. Decorative marks are hidden from assistive technology.</p></article>
+        <article><span class="feature-icon" aria-hidden="true">A+</span><h3>Reading preferences</h3><p>Readers can increase or decrease paragraph text size, add more line and paragraph spacing, and toggle a bionic-style emphasis treatment.</p></article>
+        <article><span class="feature-icon" aria-hidden="true">H</span><h3>Meaningful hierarchy</h3><p>Pages use one main heading, descriptive section headings, labelled navigation and semantic lists for the task flow and references.</p></article>
+        <article><span class="feature-icon" aria-hidden="true">◉</span><h3>Careful interaction feedback</h3><p>Copy-code buttons provide a polite status announcement, and reading preference changes are announced without moving focus.</p></article>
+      </div>
+    </section>
+    <section class="page-shell section-block" aria-labelledby="tools-title">
+      <div class="section-heading"><p class="eyebrow">03 — Try the controls</p><h2 id="tools-title">Make the page work for your reading preference</h2><p class="section-summary">The reading controls are available in the toolbar at the top of every page. They adjust paragraph text, spacing and visual word emphasis.</p></div>
+      <div class="callout"><strong>About bionic-style reading</strong><p>This optional display treatment visually emphasises the beginning of words. It is an experimental reading preference, not a proven accessibility accommodation. The underlying text remains available to screen readers as normal text. Turn it off if it makes reading harder.</p></div>
+      <div class="callout"><strong>About line and paragraph breaks</strong><p>The spacing control increases line height and the space between paragraphs. It does not rewrite the content or insert arbitrary line breaks, so the document structure remains consistent for assistive technology.</p></div>
+    </section>
+    <section class="page-shell section-block" aria-labelledby="limits-title">
+      <div class="section-heading"><p class="eyebrow">04 — Limitations</p><h2 id="limits-title">What this website does not claim</h2></div>
+      <ul class="plain-list">
+        <li>This report website has not been certified as WCAG conformant. It should itself be tested with keyboard navigation, screen readers, zoom and automated tools.</li>
+        <li>The Quora findings are preliminary. Some are direct observations; others require inspection of Quora's actual HTML and accessibility tree.</li>
+        <li>Illustrative code snippets explain accessible patterns. They are not Quora source code.</li>
+        <li>External Google Fonts require an internet connection. System font fallbacks are provided if the fonts cannot load.</li>
+      </ul>
+    </section>
+    <section class="page-shell closing-band"><p class="eyebrow">THANK YOU FOR READING</p><h2>Better access begins with better questions.</h2><p>Return to the case study or review the findings and code examples.</p><div class="hero-actions"><a class="button button-light" href="index.html">Back to the website page</a><a class="footer-light-link" href="guidelines.html">Review WCAG findings ↗</a></div></section>
+  </main>
+  <footer class="site-footer"><span>Quora, Reconsidered</span><span>Manual accessibility evaluation · 2026</span><a href="#main">Back to top ↑</a></footer>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A manual accessibility evaluation of Quora's question-creation journey, with WCAG findings, screen-reader observations and accessible design recommendations.">
+  <title>Quora, Reconsidered — Accessibility Audit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="Quora, Reconsidered home">
+        <span class="brand-mark" aria-hidden="true">Q</span>
+        <span>Quora, <span class="brand-light">Reconsidered</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Main navigation">
+        <a href="index.html" aria-current="page">The website</a>
+        <a href="guidelines.html">WCAG findings</a>
+        <a href="about.html">About this audit</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="reading-tools" role="region" aria-label="Reading preferences">
+    <span class="tools-label">Reading preferences</span>
+    <div class="tool-controls">
+      <button type="button" id="font-smaller" class="tool-button" aria-label="Decrease paragraph text size">A−</button>
+      <button type="button" id="font-larger" class="tool-button" aria-label="Increase paragraph text size">A+</button>
+      <button type="button" id="spacing-toggle" class="tool-button" aria-pressed="false">More line spacing</button>
+      <button type="button" id="bionic-toggle" class="tool-button" aria-pressed="false">Bionic reading: off</button>
+      <button type="button" id="reset-reading" class="tool-button tool-button-muted">Reset</button>
+      <span id="reading-status" class="sr-only" aria-live="polite"></span>
+    </div>
+  </div>
+
+  <main id="main" tabindex="-1">
+    <section class="hero page-shell" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <p class="eyebrow">A manual accessibility evaluation · November 2026</p>
+        <h1 id="page-title">A question should never be harder to ask than it is to answer.</h1>
+        <p class="hero-intro">An accessibility review of Quora's question-creation experience, viewed through keyboard navigation, Apple VoiceOver and a first-pass inspection of the interface.</p>
+        <div class="hero-actions">
+          <a class="button button-dark" href="guidelines.html">Explore the WCAG findings <span aria-hidden="true">↗</span></a>
+          <a class="text-link" href="#journey">Follow the user journey <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+      <aside class="hero-note" aria-label="Audit summary">
+        <span class="note-index">01 / THE AUDIT</span>
+        <p class="note-quote">“Can a new user ask a question without needing to see, point or guess?”</p>
+        <div class="note-rule"></div>
+        <dl class="meta-list">
+          <div><dt>Website</dt><dd>Quora</dd></div>
+          <div><dt>Browser</dt><dd>Google Chrome</dd></div>
+          <div><dt>Screen reader</dt><dd>Apple VoiceOver (macOS)</dd></div>
+          <div><dt>Methods</dt><dd>Mouse · Keyboard · Screen reader · HTML inspection</dd></div>
+        </dl>
+      </aside>
+    </section>
+
+    <section class="page-shell section-block" aria-labelledby="quora-title">
+      <div class="section-heading">
+        <p class="eyebrow">01 — Context</p>
+        <h2 id="quora-title">What is Quora?</h2>
+      </div>
+      <div class="two-column">
+        <div>
+          <p class="lead">Quora is essentially a Q&amp;A platform, where users can ask questions, answer questions or interact with popular questions and their answers.</p>
+          <p>It used to be popular around 2015, and since the rise of platforms like Tumblr and Twitter, it has lost some of its popularity. The way users interact with Quora now can include asking redundant questions, such as “What screenshot deserves 20,000+ likes?” The feed can feel increasingly dominated by repetitive or bot-like content rather than genuine exchanges between users.</p>
+        </div>
+        <div class="context-card">
+          <span class="card-kicker">WHY THIS WEBSITE?</span>
+          <p>I chose Quora because even in preliminary testing, several accessibility challenges became apparent: content is often embedded in images, there are multiple post-writing options, and advertisements compete with the main content for attention.</p>
+          <p class="small-note">This audit focuses on one specific task: a new user trying to add a question.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-shell section-block" aria-labelledby="environment-title">
+      <div class="section-heading">
+        <p class="eyebrow">02 — Method</p>
+        <h2 id="environment-title">Testing environment</h2>
+      </div>
+      <div class="method-grid">
+        <article class="method-card"><span class="method-number">01</span><h3>Mouse</h3><p>Used to follow the intended visual journey and identify the main controls, dialogs and messages.</p></article>
+        <article class="method-card"><span class="method-number">02</span><h3>Keyboard</h3><p>Tested reaching the Add Question control, opening the modal and interacting with the duplicate-question warning. The flow was not easy to operate using only the keyboard.</p></article>
+        <article class="method-card"><span class="method-number">03</span><h3>VoiceOver</h3><p>Used the built-in macOS screen reader with Chrome. Navigation was difficult to interpret: some announced elements were hard to map to the visible interface, and the modal, reading order and validation feedback raised concerns.</p></article>
+        <article class="method-card"><span class="method-number">04</span><h3>HTML / DevTools</h3><p>Chrome DevTools was opened for follow-up inspection. The first selected node was an advertising iframe, so the relevant question-field and dialog markup still needs to be captured before code-level failures can be confirmed.</p></article>
+      </div>
+      <p class="method-caveat"><strong>Testing note:</strong> Screen-reader unfamiliarity affected the experience. This is recorded as a usability reflection, not automatically as a WCAG failure. A second pass with more VoiceOver practice would help separate interface barriers from learning-curve effects.</p>
+    </section>
+
+    <section class="page-shell section-block" id="journey" aria-labelledby="journey-title">
+      <div class="section-heading">
+        <p class="eyebrow">03 — Task flow</p>
+        <h2 id="journey-title">The journey, step by step</h2>
+        <p class="section-summary">The audit follows the path from the Quora feed to a question submission that triggers duplicate detection and validation feedback.</p>
+      </div>
+      <ol class="journey">
+        <li><span class="journey-step">01</span><div><h3>Arrive at the home feed</h3><p>The user lands on a dense feed with global navigation, a left sidebar, posts and advertisements.</p><a href="#evidence-home">View screenshot 01</a></div></li>
+        <li><span class="journey-step">02</span><div><h3>Open Write Answers</h3><p>The user navigates to the writing area, where suggested questions and answer actions are presented.</p><a href="#evidence-write">View screenshot 02</a></div></li>
+        <li><span class="journey-step">03</span><div><h3>Choose Add Question</h3><p>The user opens the question-creation dialog, which includes tabs, a visibility control, a text-entry area and a submit button.</p><a href="#evidence-modal">View screenshot 03</a></div></li>
+        <li><span class="journey-step">04</span><div><h3>Encounter duplicate detection</h3><p>After entering “Testing UI?”, Quora presents a similar existing question and offers two possible actions.</p><a href="#evidence-duplicate">View screenshot 04</a></div></li>
+        <li><span class="journey-step">05</span><div><h3>Receive a validation message</h3><p>A message asks the user to add more detail and write a complete sentence.</p><a href="#evidence-error">View screenshot 05</a></div></li>
+      </ol>
+    </section>
+
+    <section class="page-shell section-block" aria-labelledby="evidence-title">
+      <div class="section-heading">
+        <p class="eyebrow">04 — Evidence</p>
+        <h2 id="evidence-title">Screenshots from the evaluation</h2>
+        <p class="section-summary">Each image has descriptive alternative text. Select an image to open a larger version in a separate browser tab.</p>
+      </div>
+      <div class="evidence-grid">
+        <figure class="evidence-card" id="evidence-home">
+          <a href="assets/01-quora-home.png" target="_blank" rel="noopener"><img src="assets/01-quora-home.png" alt="Screenshot of the Quora home feed in dark mode. A central post contains a large meme image, with a navigation sidebar on the left and two advertisements in a right-hand column."></a>
+          <figcaption><span>01 / HOME FEED</span><strong>A visually dense starting point</strong><p>Navigation, image-based post content and advertisements share the same viewport.</p></figcaption>
+        </figure>
+        <figure class="evidence-card" id="evidence-write">
+          <a href="assets/02-write-answers.png" target="_blank" rel="noopener"><img src="assets/02-write-answers.png" alt="Screenshot of Quora's Write Answers page. A Questions for you panel lists suggested questions with Answer, Follow and Pass controls; a Topics you know about panel appears on the right."></a>
+          <figcaption><span>02 / WRITE ANSWERS</span><strong>Multiple controls and content groups</strong><p>Suggested questions, actions and topic prompts require a clear reading and focus order.</p></figcaption>
+        </figure>
+        <figure class="evidence-card" id="evidence-modal">
+          <a href="assets/03-question-prompts.png" target="_blank" rel="noopener"><img src="assets/03-question-prompts.png" alt="Screenshot of Quora's Add Question dialog in dark mode. It shows Add Question and Create Post tabs, a blue tips panel, a Public visibility control, a question-entry area and Cancel and Add question buttons."></a>
+          <figcaption><span>03 / ADD QUESTION</span><strong>The question-creation dialog</strong><p>Tabs, instructions, visibility and the input area create several interaction points.</p></figcaption>
+        </figure>
+        <figure class="evidence-card" id="evidence-duplicate">
+          <a href="assets/04-add-question-modal.png" target="_blank" rel="noopener"><img src="assets/04-add-question-modal.png" alt="Screenshot of a Quora dialog asking whether the question was already asked. It shows the entered question Testing UI?, a suggested similar question, and Edit Question and Add new question buttons."></a>
+          <figcaption><span>04 / DUPLICATE CHECK</span><strong>A second dialog interrupts the flow</strong><p>Dynamic content and focus management should be checked with a screen reader and keyboard.</p></figcaption>
+        </figure>
+        <figure class="evidence-card" id="evidence-error">
+          <a href="assets/05-duplicate-question.png" target="_blank" rel="noopener"><img src="assets/05-duplicate-question.png" alt="Screenshot of Quora's duplicate-question dialog with an orange notification above it stating that the question needs more detail and should be written as a complete sentence."></a>
+          <figcaption><span>05 / VALIDATION</span><strong>Error feedback appears above the dialog</strong><p>The message should be announced, understandable and associated with the relevant field.</p></figcaption>
+        </figure>
+        <figure class="evidence-card">
+          <a href="assets/06-validation-error.png" target="_blank" rel="noopener"><img src="assets/06-validation-error.png" alt="Screenshot of the Quora Add Question dialog after the previous warning has disappeared. The question-entry area is empty and the Add question button is disabled."></a>
+          <figcaption><span>06 / RETURN STATE</span><strong>The form returns to an empty state</strong><p>Check whether user-entered content is preserved when an error or duplicate warning occurs.</p></figcaption>
+        </figure>
+      </div>
+      <div class="devtools-note">
+        <div><span class="card-kicker">HTML INSPECTION IN PROGRESS</span><h3>DevTools was opened, but the selected node was an ad iframe.</h3><p>The screenshots below document the inspection attempt. They do not establish the semantics of Quora's question field or dialog. Those elements need to be selected directly before making code-level claims.</p></div>
+        <div class="devtools-images">
+          <figure><a href="assets/07-devtools-inspection.png" target="_blank" rel="noopener"><img src="assets/07-devtools-inspection.png" alt="Chrome DevTools Elements panel showing an advertising iframe selected in the page DOM."></a><figcaption>DevTools — initial selection</figcaption></figure>
+          <figure><a href="assets/08-devtools-selection.png" target="_blank" rel="noopener"><img src="assets/08-devtools-selection.png" alt="Chrome DevTools Elements panel still showing an iframe element selected while the Add Question dialog is visible beside it."></a><figcaption>DevTools — selection to correct</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-shell closing-band">
+      <p class="eyebrow">NEXT — THE FINDINGS</p>
+      <h2>Where does the experience break down?</h2>
+      <p>Move from the observed journey to the relevant WCAG criteria, the evidence still needed, and accessible alternatives.</p>
+      <a class="button button-light" href="guidelines.html">View guidelines and design recommendations <span aria-hidden="true">↗</span></a>
+    </section>
+  </main>
+  <footer class="site-footer"><span>Quora, Reconsidered</span><span>Manual accessibility evaluation · 2026</span><a href="#main">Back to top ↑</a></footer>
+</body>
+</html>
